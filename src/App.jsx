@@ -31,7 +31,10 @@ function App() {
       document.cookie = `hexToken=${token}; expires=${new Date(expired)}`;
       axios.defaults.headers.common['Authorization'] = token;
 
-      const resProduct = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/admin/products`);
+      /* const resProduct = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/admin/products`); */
+      const resProduct = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/products/all`);
+
+      //console.log("resProduct", resProduct)
       setProducts(resProduct.data.products)
 
     } catch (error) {
@@ -92,9 +95,11 @@ function App() {
                 <h5 className="mt-3">更多圖片：</h5>
                 {
                   tempProduct?.imagesUrl?.map((imgUrl, index) => {
-                    return (
-                      <img src={imgUrl} key={index} className="images mb-2" alt={tempProduct.title} />
-                    )
+                    if (imgUrl) {
+                      return (
+                        <img src={imgUrl} key={index} className="images mb-2" alt={tempProduct.title} />
+                      )
+                    }
                   })
                 }
 
